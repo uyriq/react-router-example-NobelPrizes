@@ -1,0 +1,22 @@
+.link {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+}
+
+.info > span {
+  font-family: 'IBM Plex Sans', serif;
+  font-weight: 500;
+  color: rgba(250, 250, 250, 0.6);
+}
+
+.country {
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}

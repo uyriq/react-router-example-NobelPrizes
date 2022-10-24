@@ -1,0 +1,22 @@
+.container {
+  padding: var(--container-padding);
+}
+
+.horizontal_padding {
+  padding: 0 var(--container-padding);
+}
+
+.vertical_padding {
+  padding: var(--container-padding) 0;
+}
+
+.filters {
+  padding: 0 var(--container-padding);
+  display: flex;
+  justify-content: space-between;
+  box-shadow: var(--shadow);
+}
+
+.filter_item {
+  width: 50%;
+}
