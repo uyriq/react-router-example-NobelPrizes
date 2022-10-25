@@ -1,0 +1,33 @@
+.button {
+  outline: none;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 22px;
+  height: 44px;
+  font-family: 'IBM Plex Sans', serif;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 16px;
+  transition: all .3s;
+}
+
+.primary {
+  composes: button;
+  background: #7247EB;
+  color: white;
+}
+
+.primary:hover {
+  background: #5526D9;
+}
+
+.secondary {
+  composes: button;
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+}
