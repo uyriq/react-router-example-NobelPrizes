@@ -10,7 +10,7 @@
 
 .container {
   padding: var(--container-padding);
-  height: calc(100vh - var(--container-padding) * 2);
+  height: calc(100vh - var(--container-padding)*2);
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -35,4 +35,14 @@
 .heading {
   font-size: 40px;
   color: white;
+}
+
+.link {
+  padding: 12px;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  color: var(--color-text);
+  background: var(--color-primary);
+  border-radius: 100px;
 }

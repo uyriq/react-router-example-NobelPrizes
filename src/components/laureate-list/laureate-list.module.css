@@ -1,0 +1,19 @@
+.link {
+  display: flex;
+  align-items: flex-start;
+  padding: 20px 40px;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+}
+
+.link:hover {
+  background-color: var(--color-hover);
+}
+
+.avatar {
+  min-width: 128px;
+}
+
+.empty {
+  margin: 20px var(--container-padding);
+}

@@ -1,0 +1,9 @@
+.wrapper {
+  background-image: url("../images/person-bg.svg");
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: bottom;
+  background-position-x: -25vw;
+  background-repeat: no-repeat;
+}

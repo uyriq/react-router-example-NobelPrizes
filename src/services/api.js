@@ -14,5 +14,8 @@ export const serializeQuery = queryParams =>
   }, '?');
 
 // TODO: replace with server request
+export const loadLaureates = () =>
+  fetch('https://code.s3.yandex.net/react/code/laureate.json').then(response => response.json()).then(({ laureates }) => laureates);
+// TODO: replace with server request
 export const loadCountries = () =>
   fetch('https://code.s3.yandex.net/react/code/country.json').then(response => response.json()).then(({ countries }) => countries);

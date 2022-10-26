@@ -20,3 +20,36 @@
   width: 100%;
   box-sizing: border-box;
 }
+
+.country:hover {
+  background-color: var(--color-primary);
+  border-radius: 100px;
+}
+
+.country:hover span {
+  transition: all .3s;
+}
+
+.country img {
+  opacity: 0;
+}
+
+.country:hover img {
+  opacity: 1;
+}
+
+.country:hover span {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.country > div {
+  flex-basis: 50%;
+}
+
+.country > div:last-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
