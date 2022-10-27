@@ -1,0 +1,26 @@
+:root {
+  --color-list: #2F2F37;
+}
+
+.container {
+  position: relative;
+  width: 240px;
+}
+
+.selected_wrapper {
+  display: flex;
+  padding: 20px 0;
+  align-items: center;
+}
+
+.selected_wrapper:hover {
+  cursor: pointer;
+}
+
+.selected {
+  margin-right: 8px;
+}
+
+.selected span {
+  font-weight: bold;
+}
