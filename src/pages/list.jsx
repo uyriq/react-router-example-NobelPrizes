@@ -10,11 +10,21 @@ import { deserializeQuery, loadCountries, loadLaureates, serializeQuery } from '
 export const ASC = 'asc'
 export const DESC = 'desc'
 
-const sortCb = (personCountSorting) => {
-    if (personCountSorting === ASC) {
-        return (a, b) => (a.count < b.count ? 1 : a.count > b.count ? -1 : 0)
-    } else {
-        return (a, b) => (b.count > a.count ? -1 : b.count < a.count ? 1 : 0)
+const sortCb = (countrySorting, personCountSorting) => {
+    if (countrySorting) {
+        if (countrySorting === ASC) {
+            return (a, b) => a.name.localeCompare(b.name)
+        } else {
+            return (a, b) => b.name.localeCompare(a.name)
+        }
+    }
+
+    if (personCountSorting) {
+        if (personCountSorting === ASC) {
+            return (a, b) => (a.count < b.count ? 1 : a.count > b.count ? -1 : 0)
+        } else {
+            return (a, b) => (b.count > a.count ? -1 : b.count < a.count ? 1 : 0)
+        }
     }
 }
 
@@ -28,6 +38,7 @@ const aggregateData = (acc, person) => {
 export const ListPage = () => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
+    const [countrySorting, setCountrySorting] = useState(ASC)
     const [personCountSorting, setPersonCountSorting] = useState('')
 
     const history = useHistory()
@@ -47,7 +58,7 @@ export const ListPage = () => {
                     name,
                     count: (hashLaureates[code] && hashLaureates[code].length) || 0,
                 }))
-                .sort(sortCb(personCountSorting))
+                .sort(sortCb(countrySorting, personCountSorting))
             setData(normalizedData)
         } finally {
             setLoading(false)
@@ -58,8 +69,12 @@ export const ListPage = () => {
         if (search) {
             const queryObj = deserializeQuery(search)
             Object.keys(deserializeQuery(search)).forEach((key) => {
-                if (key === 'count') {
+                if (key === 'country') {
+                    setCountrySorting(queryObj[key])
+                    setPersonCountSorting('')
+                } else {
                     setPersonCountSorting(queryObj[key])
+                    setCountrySorting('')
                 }
             })
         }
@@ -68,7 +83,7 @@ export const ListPage = () => {
 
     useEffect(() => {
         loadCountryInfo()
-    }, [personCountSorting])
+    }, [countrySorting, personCountSorting])
 
     const content = loading ? 'loading' : data && data.length ? <CountryList countries={data} /> : null
 
@@ -82,18 +97,33 @@ export const ListPage = () => {
         },
         [search]
     )
-    //  задача — доработать функцию sortCountries: именно в ней должна происходить подстановка query-параметров в URL
+
     const sortCountries = useCallback(
         (type) => {
-            const nextSortingValue = personCountSorting ? (personCountSorting === ASC ? DESC : ASC) : ASC
-            let query = getNextQuery(personCountSorting, nextSortingValue)
-            setPersonCountSorting(nextSortingValue)
+            let query
+            switch (type) {
+                case 'country': {
+                    const nextSortingValue = countrySorting ? (countrySorting === ASC ? DESC : ASC) : ASC
+                    query = ''
+                    break
+                }
+                case 'count': {
+                    const nextSortingValue = personCountSorting ? (personCountSorting === ASC ? DESC : ASC) : ASC
+                    setPersonCountSorting(nextSortingValue)
+                    query = getNextQuery(type, nextSortingValue)
+                    break
+                }
+                default: {
+                    break
+                }
+            }
+
             history.replace({
                 pathname,
                 search: query,
             })
         },
-        [history, pathname, personCountSorting, getNextQuery]
+        [history, pathname, personCountSorting, countrySorting, getNextQuery]
     )
 
     return (
@@ -102,6 +132,13 @@ export const ListPage = () => {
                 <h1>List of Nobel laureates</h1>
             </header>
             <div className={styles.filters}>
+                <div className={styles.filter_item}>
+                    <SortingControl
+                        label={'Country'}
+                        onSort={() => sortCountries('country')}
+                        value={countrySorting}
+                    />
+                </div>
                 <div className={styles.filter_item}>
                     <SortingControl
                         label={'Number of Nobel laureates'}
