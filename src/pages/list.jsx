@@ -27,7 +27,7 @@ const sortCb = (countrySorting, personCountSorting) => {
         }
     }
 }
-
+// 👀 интересный прием!
 const aggregateData = (acc, person) => {
     return {
         ...acc,
@@ -104,11 +104,14 @@ export const ListPage = () => {
             switch (type) {
                 case 'country': {
                     const nextSortingValue = countrySorting ? (countrySorting === ASC ? DESC : ASC) : ASC
-                    query = ''
+                    setPersonCountSorting('')
+                    setCountrySorting(nextSortingValue)
+                    query = getNextQuery(type, nextSortingValue)
                     break
                 }
                 case 'count': {
                     const nextSortingValue = personCountSorting ? (personCountSorting === ASC ? DESC : ASC) : ASC
+                    setCountrySorting('')
                     setPersonCountSorting(nextSortingValue)
                     query = getNextQuery(type, nextSortingValue)
                     break
