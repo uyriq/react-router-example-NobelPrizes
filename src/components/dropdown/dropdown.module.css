@@ -1,0 +1,75 @@
+:root {
+  --color-list: #2F2F37;
+}
+
+.container {
+  position: relative;
+  width: 240px;
+}
+
+.selected_wrapper {
+  display: flex;
+  padding: 20px 0;
+  align-items: center;
+}
+
+.selected_wrapper:hover {
+  cursor: pointer;
+}
+
+.selected {
+  margin-right: 8px;
+}
+
+.selected span {
+  font-weight: bold;
+}
+
+.menu {
+  padding: 20px 16px 20px 20px;
+  background: var(--color-list);
+  border-radius: 20px;
+  display: none;
+}
+
+.menu__open {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  max-height: 340px;
+  transform: translateY(100%);
+}
+
+.option {
+  color: rgba(250, 250, 250, 0.6);
+  width: 100%;
+  cursor: pointer;
+}
+
+.option:not(:last-child) {
+  margin-bottom: 12px;
+}
+
+.option:hover, .option__selected {
+  color: var(--color-text);
+}
+
+.scroll_area {
+  overflow-y: scroll;
+  width: 100%;
+  /* firefox */
+  scrollbar-color: var(--color-thumb);
+}
+
+.scroll_area::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll_area::-webkit-scrollbar-thumb {
+  background: var(--color-thumb);
+  border-radius: 12px;
+}
