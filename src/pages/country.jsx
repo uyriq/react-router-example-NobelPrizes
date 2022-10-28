@@ -86,10 +86,11 @@ export const CountryPage = () => {
     const filterItems = useCallback(
         (value, type) => {
             let query = search
-
+            // 👀
             const isAllItems = value.toLowerCase() === ALL
             if (!search && !isAllItems) {
                 query = `?${type}=${value}`
+                // serialize
             } else {
                 let params = deserializeQuery(query)
                 if (isAllItems) {
@@ -97,9 +98,9 @@ export const CountryPage = () => {
                         delete params[type]
                     }
                 } else {
-                    params = {}
+                    params = { ...params, [type]: value }
                 }
-                query = ''
+                query = serializeQuery(params)
             }
             history.replace({
                 pathname,
