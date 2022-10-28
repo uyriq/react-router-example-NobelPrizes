@@ -56,10 +56,11 @@ export const CountryPage = () => {
         (selectedYear, selectedCategory) => {
             loadLaureates().then((laureates) => {
                 const countryLaureates = laureates.filter(({ bornCountryCode }) => bornCountryCode === country)
+                // 👀
                 const isItemFits = (prizes) => {
                     const isYearFits = (year) => (selectedYear ? year === selectedYear : true)
                     const isCategoryFits = (category) => (selectedCategory ? category === selectedCategory : true)
-                    return prizes.some(({ year, category }) => isYearFits(year) && isCategoryFits(category))
+                    return prizes
                 }
 
                 const filteredLaureates = []
@@ -74,23 +75,22 @@ export const CountryPage = () => {
         },
         [country]
     )
-
+    // 👀
     useEffect(() => {
-        const params = deserializeQuery(search)
+        const params = {}
 
         setSelectedYear(`${params.year || ALL}`) // to string
         setSelectedCategory(params.category || ALL)
         filterLaureates(params.year, params.category)
     }, [search, filterLaureates])
-
+    // 👀
     const filterItems = useCallback(
         (value, type) => {
             let query = search
-            // 👀
+
             const isAllItems = value.toLowerCase() === ALL
             if (!search && !isAllItems) {
                 query = `?${type}=${value}`
-                // serialize
             } else {
                 let params = deserializeQuery(query)
                 if (isAllItems) {
