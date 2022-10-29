@@ -5,7 +5,7 @@ import LaureateList from '../components/laureate-list'
 import Dropdown from '../components/dropdown'
 import { loadLaureates, loadCountries, deserializeQuery, serializeQuery } from '../services/api'
 
-const ALL = 'all'
+const ALL = 'all' // 👀 имя variable uppercase само value lowercase
 
 export const CountryPage = () => {
     const [laureates, setLaureates] = useState([])
@@ -52,15 +52,15 @@ export const CountryPage = () => {
         loadAllCountryLaureates()
     }, [country, loadCountryInfo, loadAllCountryLaureates])
 
+    // 👀
     const filterLaureates = useCallback(
         (selectedYear, selectedCategory) => {
             loadLaureates().then((laureates) => {
                 const countryLaureates = laureates.filter(({ bornCountryCode }) => bornCountryCode === country)
-                // 👀
                 const isItemFits = (prizes) => {
                     const isYearFits = (year) => (selectedYear ? year === selectedYear : true)
                     const isCategoryFits = (category) => (selectedCategory ? category === selectedCategory : true)
-                    return prizes
+                    return prizes.some(({ year, category }) => isYearFits(year) && isCategoryFits(category))
                 }
 
                 const filteredLaureates = []
@@ -77,8 +77,7 @@ export const CountryPage = () => {
     )
     // 👀
     useEffect(() => {
-        const params = {}
-
+        const params = deserializeQuery(search)
         setSelectedYear(`${params.year || ALL}`) // to string
         setSelectedCategory(params.category || ALL)
         filterLaureates(params.year, params.category)
