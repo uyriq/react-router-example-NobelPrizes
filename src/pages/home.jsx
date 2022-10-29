@@ -7,10 +7,10 @@ import { Button } from '../components/button'
 
 export function HomePage() {
     const history = useHistory()
-
+    // 👀
     const onClick = () => {
         const initialBreadcrumb = [{ path: '/', url: '/', title: 'Home' }]
-        history.replace({ pathname: '/list' })
+        history.replace({ pathname: '/list', state: initialBreadcrumb })
     }
 
     return (

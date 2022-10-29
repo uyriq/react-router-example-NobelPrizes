@@ -147,6 +147,7 @@ export const ListPage = () => {
     return (
         <div className={styles.vertical_padding}>
             <header className={styles.horizontal_padding}>
+                <Breadcrumbs />
                 <h1>List of Nobel laureates</h1>
             </header>
             <div className={styles.filters}>
