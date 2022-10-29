@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { useParams, useLocation, useHistory } from 'react-router-dom'
+import { useParams, useRouteMatch, useLocation, useHistory } from 'react-router-dom'
 import styles from './page.module.css'
 import LaureateList from '../components/laureate-list'
 import Dropdown from '../components/dropdown'
+import { Breadcrumbs } from '../components/breadcrumbs'
 import { loadLaureates, loadCountries, deserializeQuery, serializeQuery } from '../services/api'
+import { isContainRoute } from '../services/breadcrumbs'
 
-const ALL = 'all' // 👀 имя variable uppercase само value lowercase
+const ALL = 'all'
 
 export const CountryPage = () => {
     const [laureates, setLaureates] = useState([])
@@ -16,8 +18,14 @@ export const CountryPage = () => {
     const [countryTitle, setCountryTitle] = useState('')
 
     const { country } = useParams()
-    const { pathname, search } = useLocation()
+    const { pathname, search, state } = useLocation()
     const history = useHistory()
+    const { path, url } = useRouteMatch()
+
+    useEffect(() => {
+        if (countryTitle) {
+        }
+    }, [countryTitle, path, url, state, history])
 
     const loadFilters = (filteredLaureates) => {
         const years = new Set()
@@ -52,7 +60,6 @@ export const CountryPage = () => {
         loadAllCountryLaureates()
     }, [country, loadCountryInfo, loadAllCountryLaureates])
 
-    // 👀
     const filterLaureates = useCallback(
         (selectedYear, selectedCategory) => {
             loadLaureates().then((laureates) => {
@@ -75,14 +82,15 @@ export const CountryPage = () => {
         },
         [country]
     )
-    // 👀
+
     useEffect(() => {
         const params = deserializeQuery(search)
+
         setSelectedYear(`${params.year || ALL}`) // to string
         setSelectedCategory(params.category || ALL)
         filterLaureates(params.year, params.category)
     }, [search, filterLaureates])
-    // 👀
+
     const filterItems = useCallback(
         (value, type) => {
             let query = search
@@ -117,7 +125,7 @@ export const CountryPage = () => {
             <div className={styles.filters}>
                 <div className={styles.filter_item}>
                     <Dropdown
-                        label='Year'
+                        label="Year"
                         options={yearOptions}
                         handleOnSelect={(value) => filterItems(value, 'year')}
                         selected={selectedYear}
@@ -125,7 +133,7 @@ export const CountryPage = () => {
                 </div>
                 <div className={styles.filter_item}>
                     <Dropdown
-                        label='Category'
+                        label="Category"
                         options={categoryOptions}
                         handleOnSelect={(value) => filterItems(value, 'category')}
                         selected={selectedCategory}

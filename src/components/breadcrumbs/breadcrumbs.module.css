@@ -1,0 +1,4 @@
+.item,
+.item a {
+  color: var(--color-text);
+}
