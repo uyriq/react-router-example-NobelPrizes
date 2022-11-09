@@ -23,7 +23,8 @@ export const CountryPage = () => {
     const { path, url } = useRouteMatch()
 
     useEffect(() => {
-        if (countryTitle) {
+        if (countryTitle && state && !isContainRoute(state, url)) {
+            history.replace({ state: [...state, { path, url, title: countryTitle }] })
         }
     }, [countryTitle, path, url, state, history])
 
@@ -109,7 +110,9 @@ export const CountryPage = () => {
                 }
                 query = serializeQuery(params)
             }
+            const { state } = history.location
             history.replace({
+                state,
                 pathname,
                 search: query,
             })
@@ -120,6 +123,7 @@ export const CountryPage = () => {
     return (
         <div className={styles.vertical_padding}>
             <header className={styles.horizontal_padding}>
+                <Breadcrumbs />
                 <h1>{countryTitle}</h1>
             </header>
             <div className={styles.filters}>

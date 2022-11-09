@@ -1,0 +1,33 @@
+.inputContainer{
+  background-color: #26262C;
+  height: 44px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 22px;
+  padding: 0 12px;
+}
+
+
+.input{
+  font-family: 'IBM Plex Sans', serif;
+  font-weight: 400;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  background: transparent;
+  width: 100%;
+}
+
+.input:-webkit-autofill {
+  -webkit-text-fill-color: rgba(250, 250, 250, 68) !important;
+}
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:active
+{
+  -webkit-box-shadow: 0 0 0 30px #26262C inset !important;
+}

@@ -25,9 +25,19 @@ export const PersonPage = () => {
         loadLaureateInfo()
     }, [personId, loadLaureateInfo])
 
+    useEffect(() => {
+        if (person && person.firstname && person.surname && state && !isContainRoute(state, url)) {
+            const personBreadcrumb = { path, url, title: `${person.firstname} ${person.surname}` }
+            history.replace({ state: [...state, personBreadcrumb] })
+        }
+    }, [person, path, url, state, history])
+
     return (
         <div className={wrapper}>
-            <div className={styles.container}>{person ? <PersonInfo person={person} /> : null}</div>
+            <div className={styles.container}>
+                <Breadcrumbs />
+                {person ? <PersonInfo person={person} /> : null}
+            </div>
         </div>
     )
 }

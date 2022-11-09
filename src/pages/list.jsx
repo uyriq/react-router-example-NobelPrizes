@@ -3,10 +3,10 @@ import { useHistory, useLocation, useRouteMatch } from 'react-router-dom'
 
 import styles from './page.module.css'
 
-import { Breadcrumbs } from '../components/breadcrumbs'
 import { CountryList } from '../components/country-list'
 import { SortingControl } from '../components/sorting-control'
 import { isContainRoute } from '../services/breadcrumbs'
+import { Breadcrumbs } from '../components/breadcrumbs'
 import { deserializeQuery, loadCountries, loadLaureates, serializeQuery } from '../services/api'
 
 export const ASC = 'asc'
@@ -47,17 +47,11 @@ export const ListPage = () => {
     const { pathname, search, state } = useLocation()
     const { url, path } = useRouteMatch()
 
-    useEffect(
-        () => {
-            if (state) {
-                history.replace({
-                    state: [...state, { path, url, title: 'List of Nobel laureates' }],
-                })
-            }
-        },
-        /* eslint-disable-next-line */
-        []
-    )
+    useEffect(() => {
+        if (state && !isContainRoute(state, url)) {
+            history.replace({ state: [...state, { path, url, title: 'List of Nobel laureates' }] })
+        }
+    }, [path, url, state, history])
 
     const loadCountryInfo = async () => {
         setLoading(true)
@@ -136,7 +130,10 @@ export const ListPage = () => {
                 }
             }
 
+            const { state } = history.location
+
             history.replace({
+                state,
                 pathname,
                 search: query,
             })

@@ -13,9 +13,7 @@ export const SortingControl = ({ label, onSort, value }) => {
                 <img
                     src={sorting}
                     alt={`sorting-direction: ${value}`}
-                    style={{
-                        transform: value.toLowerCase() === ASC ? 'rotate(180deg)' : '',
-                    }}
+                    style={{ transform: value.toLowerCase() === ASC ? 'rotate(180deg)' : '' }}
                 />
             </div>
         </div>
