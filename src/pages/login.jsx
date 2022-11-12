@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { Redirect, useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 import styles from './home.module.css'
 
@@ -20,16 +20,14 @@ export function LoginPage() {
     let login = useCallback(
         (e) => {
             e.preventDefault()
-            auth.signIn(() => {
-                history.replace({ pathname: '/' })
-            })
+            auth.signIn(form)
         },
         [auth, form]
     )
 
     if (auth.user) {
         return (
-            <Redirect
+            <Redirect // вместо useHistory
                 to={{
                     pathname: '/',
                 }}
