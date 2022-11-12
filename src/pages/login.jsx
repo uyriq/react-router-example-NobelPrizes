@@ -27,7 +27,7 @@ export function LoginPage() {
 
     if (auth.user) {
         return (
-            <Redirect // вместо useHistory
+            <Redirect
                 to={{
                     pathname: '/',
                 }}
